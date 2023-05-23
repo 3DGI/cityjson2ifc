@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cityjson2ifc"
+version = "1.0"
+description = "Convert CityJSON files to IFC format"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0 License" }
+authors = [
+    { name = "3DGI", email = "info@3dgi.nl" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: GIS",
+    "License :: OSI Approved :: Apache Software License"
+]
+urls = { github = "https://github.com/3DGI/cityjson2jsonfg" }
+dependencies = [
+    "cjio >= 0.8",
+    "click >= 8.1",
+    "ifcopenshell ~= 0.7.0"
+]
+optional-dependencies = { develop = ["pytest", "tox"] }
+scripts = { cityjson2ifc = "cityjson2ifc.cli:main_cmd" }
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
