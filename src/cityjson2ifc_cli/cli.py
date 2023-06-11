@@ -20,39 +20,42 @@ import gc
 import click
 from cjio import errors, cityjson, cjio
 
-from cityjson2ifc import convert
+from cityjson2ifc_cli import convert
 
 cityjson.CITYJSON_VERSIONS_SUPPORTED = ['1.1',]
 
 
 def main(infile, outfile, ignore_duplicate_keys):
     click.echo("Parsing %s" % infile.name)
-    if infile.name == "<stdin>":
-        cm = cityjson.read_stdin()
-    else:
-        try:
-            cm = cityjson.reader(file=infile, ignore_duplicate_keys=ignore_duplicate_keys)
-        except ValueError as e:
-            raise click.ClickException('%s: "%s".' % (e, infile))
-        except IOError as e:
-            raise click.ClickException('Invalid file: "%s".\n%s' % (infile, e))
-
-    try:
-        with warnings.catch_warnings(record=True) as w:
-            cm.check_version()
-            cjio._print_cmd(w)
-    except errors.CJInvalidVersion as e:
-        raise click.ClickException(e.msg)
+    # if infile.name == "<stdin>":
+    #     cm = cityjson.read_stdin()
+    # else:
+    #     try:
+    #         cm = cityjson.reader(file=infile, ignore_duplicate_keys=ignore_duplicate_keys)
+    #     except ValueError as e:
+    #         raise click.ClickException('%s: "%s".' % (e, infile))
+    #     except IOError as e:
+    #         raise click.ClickException('Invalid file: "%s".\n%s' % (infile, e))
+    #
+    # try:
+    #     with warnings.catch_warnings(record=True) as w:
+    #         cm.check_version()
+    #         cjio._print_cmd(w)
+    # except errors.CJInvalidVersion as e:
+    #     raise click.ClickException(e.msg)
 
     # Dereference the CityJSON geometry boundaries so that they store the
     # coordinates instead of vertex indices
-    cm.load_from_j()
-    # TODO: Remove duplicate data from the citymodel (need to be fixed in cjio)
-    cm.j["CityObjects"] = {}
-    gc.collect()
+    cm = cityjson.load(infile, transform=False)
+
+    data = {}
+    data["name_attribute"] = "identificatie"
+    data["file_destination"] = str(outfile)
+    data["lod"] = "2.2"
+    data["split"] = True
 
     click.echo("Converting to IFC")
-    collection = None
+    convert.convert(data, cm)
     click.echo("Writing to %s" % outfile.name)
     outfile.write("")
 

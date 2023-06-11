@@ -13,3 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+
+from ifccityjson.cityjson2ifc.cityjson2ifc import Cityjson2ifc
+
+def convert(data, city_model):
+
+    converter = Cityjson2ifc()
+    converter.configuration(**data)
+    converter.convert(city_model)

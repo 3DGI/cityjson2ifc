@@ -1,6 +1,6 @@
 import pytest
 from click.testing import CliRunner
-from cityjson2ifc import cli
+from cityjson2ifc_cli import cli
 
 
 def fail_with_msg(result, runner):

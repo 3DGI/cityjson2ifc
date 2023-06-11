@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cityjson2ifc"
+name = "cityjson2ifc_cli"
 version = "1.0"
 description = "Convert CityJSON files to IFC format"
 readme = "README.md"
@@ -19,15 +19,28 @@ classifiers = [
 ]
 urls = { github = "https://github.com/3DGI/cityjson2jsonfg" }
 dependencies = [
-    "cjio >= 0.8",
     "click >= 8.1",
-    "ifcopenshell ~= 0.7.0"
+    "ifccityjson @ file:///home/balazs/Development/IfcOpenShell/#subdirectory=src/ifccityjson"
 ]
-optional-dependencies = { develop = ["pytest", "tox"] }
-scripts = { cityjson2ifc = "cityjson2ifc.cli:main_cmd" }
+optional-dependencies = { develop = ["pytest", "tox", "briefcase"] }
+scripts = { cityjson2ifc = "cityjson2ifc_cli.cli:main_cmd" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.briefcase]
+project_name = "cityjson2ifc"
+bundle = "com.example"
+version = "0.1"
+
+[tool.briefcase.app.cityjson2ifc]
+formal_name = "CityJSON2IFC"
+description = "Convert CityJSON files to IFC"
+long_description = "Convert CityJSON files to IFC format"
+sources = ['src/cityjson2ifc_cli']
