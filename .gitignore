@@ -3,3 +3,7 @@
 .tox
 *.egg-info
 tests/data/tmp/*.json
+tests/__pycache__
+/build/
+/dist/
+/logs/
