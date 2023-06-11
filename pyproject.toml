@@ -20,7 +20,7 @@ classifiers = [
 urls = { github = "https://github.com/3DGI/cityjson2jsonfg" }
 dependencies = [
     "click >= 8.1",
-    "ifccityjson @ file:///home/balazs/Development/IfcOpenShell/#subdirectory=src/ifccityjson"
+    "ifccityjson @ git+https://github.com/3DGI/IfcOpenShell.git@build-package#subdirectory=src/ifccityjson"
 ]
 optional-dependencies = { develop = ["pytest", "tox", "briefcase"] }
 scripts = { cityjson2ifc = "cityjson2ifc_cli.cli:main_cmd" }
