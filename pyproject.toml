@@ -40,7 +40,7 @@ bundle = "com.example"
 version = "0.1"
 
 [tool.briefcase.app.cityjson2ifc_cli]
-formal_name = "CityJSON2IFC"
+formal_name = "cityjson2ifc"
 description = "Convert CityJSON files to IFC"
 long_description = "Convert CityJSON files to IFC format"
 sources = ['src/cityjson2ifc_cli']
