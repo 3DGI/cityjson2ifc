@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cityjson2ifc_cli"
-version = "1.0"
+version = "1.0-alpha"
 description = "Convert CityJSON files to IFC format"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -21,8 +21,8 @@ dependencies = [
     "click >= 8.1",
     "ifccityjson @ git+https://github.com/3DGI/IfcOpenShell.git@build-package#subdirectory=src/ifccityjson"
 ]
-optional-dependencies = { develop = ["pytest", "tox", "briefcase"] }
-scripts = { cityjson2ifc = "cityjson2ifc_cli.cli:main_cmd" }
+optional-dependencies = { develop = ["pytest", "tox"] }
+scripts = { cityjson2ifc = "cityjson2ifc_cli.cli:cli" }
 
 [project.urls]
 "Homepage" = "https://github.com/3DGI/cityjson2ifc"
@@ -37,17 +37,3 @@ log_cli = true
 log_cli_level = "INFO"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
-
-[tool.briefcase]
-project_name = "cityjson2ifc"
-bundle = "nl.3dgi"
-version = "1.0"
-autor = "3DGI"
-author_email = "info@3dgi.nl"
-url = "https://github.com/3DGI/cityjson2ifc"
-
-[tool.briefcase.app.cityjson2ifc-cli]
-formal_name = "cityjson2ifc"
-description = "Convert CityJSON files to IFC"
-long_description = "Convert CityJSON files to IFC format"
-sources = ['src/cityjson2ifc_cli']

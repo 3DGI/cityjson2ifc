@@ -9,9 +9,9 @@ Supported versions:
 
 ## Installation
 
-Download and install the executable for your platform from one of the [releases](https://github.com/3DGI/cityjson2ifc/releases).
+Download the executable for your platform from one of the [releases](https://github.com/3DGI/cityjson2ifc/releases) and run it in the command line.
 
-Alternatively, you can install with pip.
+Alternatively, you can install with pip, after cloning the repository.
 
 ### Install with pip
 
@@ -19,10 +19,12 @@ Required python: >= 3.8
 
 Additionally, you need a relatively new version of `pip` and `setuptools` that supports building from `pyproject.toml` files.
 
-You can install *cityjson2ifc* with pip.
+You can install *cityjson2ifc* with pip, from a local copy of the repository.
 
 ```shell
-pip install cityjson2ifc
+git clone https://github.com/3DGI/cityjson2ifc.git
+cd cityjson2ifc
+pip install .
 ```
 
 ## Usage
@@ -126,7 +128,7 @@ Please read the [CONTRIBUTING.md](https://github.com/3DGI/cityjson2jsonfg/blob/m
 
 ## Credits
 
-*cityjson2ifc* is a CLI that wraps the code that was developed by Laurens Oostwegel in 2021, [as part of IfcOpenShell](https://github.com/IfcOpenShell/IfcOpenShell/tree/v0.7.0/src/ifccityjson).
+*cityjson2ifc* is a CLI that wraps the code that was developed by Laurens J.N. Oostwegel in 2021, [as part of IfcOpenShell](https://github.com/IfcOpenShell/IfcOpenShell/tree/v0.7.0/src/ifccityjson).
 
 ## Funding
 

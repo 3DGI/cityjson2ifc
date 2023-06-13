@@ -21,9 +21,9 @@ import warnings
 import gc
 
 import click
-from cjio import errors, cityjson, cjio
+from cjio import errors, cityjson
 
-from cityjson2ifc_cli import convert
+from cityjson2ifc_cli import convert, __version__
 
 
 def load_cityjson(infile, ignore_duplicate_keys):
@@ -40,7 +40,7 @@ def load_cityjson(infile, ignore_duplicate_keys):
     try:
         with warnings.catch_warnings(record=True) as w:
             cm.check_version()
-            cjio._print_cmd(w)
+            click.echo(w)
     except errors.CJInvalidVersion as e:
         raise click.ClickException(e.msg)
     if cm.get_version() != "1.1":
@@ -67,7 +67,7 @@ def main(infile, outfile, ignore_duplicate_keys=None,
     cm = load_cityjson(infile, ignore_duplicate_keys)
 
     click.echo("Converting to IFC")
-    convert.cityjson2ifc(cm=cm, file_destination=str(outfile), lod_split=lod_split,
+    convert.cityjson2ifc(cm=cm, file_destination=str(outfile.name), lod_split=lod_split,
                          lod_select=lod_select, name_entity=name_entity,
                          name_project=name_project, name_site=name_site,
                          name_person_family=name_person_family,
@@ -76,7 +76,7 @@ def main(infile, outfile, ignore_duplicate_keys=None,
 
 
 @click.command(name="main")
-@click.version_option()
+@click.version_option(version=__version__, prog_name="cityjson2ifc")
 @click.argument("infile", type=click.File("r"), default=sys.stdin)
 @click.argument("outfile", type=click.File("w", lazy=True))
 @click.option('--ignore_duplicate_keys', is_flag=True,
@@ -91,9 +91,9 @@ def main(infile, outfile, ignore_duplicate_keys=None,
 @click.option('--name-site', type=str, help='Set the IfcSite name.')
 @click.option('--name-person-family', type=str, help='Set the IfcPerson family name.')
 @click.option('--name-person-given', type=str, help='Set the IfcPerson given name.')
-def main_cmd(infile, outfile, ignore_duplicate_keys, lod_split, lod_select,
-             name_entity, name_project, name_site, name_person_family,
-             name_person_given):
+def cli(infile, outfile, ignore_duplicate_keys, lod_split, lod_select,
+        name_entity, name_project, name_site, name_person_family,
+        name_person_given):
     """A command line tool for converting CityJSON files to IFC format.
 
         INFILE – Path to a CityJSON file\n
@@ -104,3 +104,7 @@ def main_cmd(infile, outfile, ignore_duplicate_keys, lod_split, lod_select,
          name_project=name_project, name_site=name_site,
          name_person_family=name_person_family, name_person_given=name_person_given
          )
+
+
+if getattr(sys, 'frozen', False):
+    cli(sys.argv[1:])

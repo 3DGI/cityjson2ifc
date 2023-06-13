@@ -1,0 +1,70 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+#    tags:
+#      - '*'
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+        include:
+          - os: windows-latest
+            artifact_name: cityjson2ifc-win
+          - os: ubuntu-latest
+            artifact_name: cityjson2ifc-ubuntu
+          - os: macos-latest
+            artifact_name: cityjson2ifc-macos
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest tox pyinstaller
+    - if: runner.os == 'Windows'
+      run: |
+        git config --system core.longpaths true
+    - name: Test with tox
+      run: |
+        tox
+    - name: Pyinstaller package
+      run: |
+        pip install .
+        pyinstaller --name cityjson2ifc --onefile --collect-submodules ifcopenshell --collect-submodules ifccityjson --hidden-import ifccityjson src/cityjson2ifc_cli/cli.py
+    - if: runner.os == 'Linux'
+      run: |
+        zip -rj dist/cityjson2ifc-ubuntu.zip dist/cityjson2ifc
+        rm dist/cityjson2ifc
+    - if: runner.os == 'macOS'
+      run: |
+        zip -rj dist/cityjson2ifc-macos.zip dist/cityjson2ifc
+        rm dist/cityjson2ifc
+    - name: List contents
+      run: |
+        ls dist
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GH_PAT }}
+        file: dist/*
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
