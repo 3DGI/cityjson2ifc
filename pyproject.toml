@@ -8,23 +8,26 @@ version = "1.0"
 description = "Convert CityJSON files to IFC format"
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "Apache-2.0 License" }
+license = { text = "Lesser General Public License v3 or later" }
 authors = [
     { name = "3DGI", email = "info@3dgi.nl" }
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Scientific/Engineering :: GIS",
-    "License :: OSI Approved :: Apache Software License"
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)"
 ]
-urls = { github = "https://github.com/3DGI/cityjson2jsonfg" }
 dependencies = [
     "click >= 8.1",
-    "ifccityjson @ file:///home/balazs/Development/IfcOpenShell/#subdirectory=src/ifccityjson"
-#    "ifccityjson @ git+https://github.com/3DGI/IfcOpenShell.git@build-package#subdirectory=src/ifccityjson"
+    "ifccityjson @ git+https://github.com/3DGI/IfcOpenShell.git@build-package#subdirectory=src/ifccityjson"
 ]
 optional-dependencies = { develop = ["pytest", "tox", "briefcase"] }
 scripts = { cityjson2ifc = "cityjson2ifc_cli.cli:main_cmd" }
+
+[project.urls]
+"Homepage" = "https://github.com/3DGI/cityjson2ifc"
+"Bug Tracker" = "https://github.com/3DGI/cityjson2ifc/issues"
+
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -37,8 +40,11 @@ log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 
 [tool.briefcase]
 project_name = "cityjson2ifc"
-bundle = "com.example"
-version = "0.1"
+bundle = "nl.3dgi"
+version = "1.0"
+autor = "3DGI"
+author_email = "info@3dgi.nl"
+url = "https://github.com/3DGI/cityjson2ifc"
 
 [tool.briefcase.app.cityjson2ifc-cli]
 formal_name = "cityjson2ifc"
