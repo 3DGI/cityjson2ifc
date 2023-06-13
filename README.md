@@ -2,9 +2,18 @@
 
 *A command line tool for converting CityJSON files to IFC format.*
 
+Supported versions:
 
+- CityJSON v1.1
+- IFC 4
 
 ## Installation
+
+Download and install the executable for your platform from one of the [releases](https://github.com/3DGI/cityjson2ifc/releases).
+
+Alternatively, you can install with pip.
+
+### Install with pip
 
 Required python: >= 3.8
 
@@ -44,13 +53,63 @@ cjio --suppress_msg <input.city.json> upgrade save stdout | cityjson2ifc - <outp
 
 ## Limitations
 
-
-
-## Converted data
-
-
+- CityJSON extensions are not supported (except the *GenericCityObject*)
+- The following CityJSON geometry types are not supported, `Solid: interior shell`, `GeometryInstance`.
 
 ## CityJSON --> IFC conversion table
+
+| **CityJSON**                | **IFC**                 | **IFC attributes**                                                |
+|:----------------------------|:------------------------|:------------------------------------------------------------------|
+| Building                    | IfcBuilding             |                                                                   |
+| BuildingPart                | IfcBuilding             | CompositionType: PARTIAL                                          |
+| BuildingInstallation        | IfcBuildingElementProxy |                                                                   |
+| BuildingConstructiveElement | IfcBuildingElementProxy |                                                                   |
+| BuildingFurniture           | IfcFurniture            |                                                                   |
+| BuildingStorey              | IfcBuildingStorey       | CompositionType: PARTIAL                                          |
+| BuildingRoom                | IfcSpace                | CompositionType: ELEMENT                                          |
+| BuildingUnit                | IfcSpace                | CompositionType: ELEMENT                                          |
+| Road                        | IfcCivilElement         |                                                                   |
+| Railway                     | IfcCivilElement         |                                                                   |
+| TransportationSquare        | IfcCivilElement         |                                                                   |
+| TINRelief                   | IfcGeographicElement    | PredefinedType: TERRAIN                                           |
+| WaterBody                   | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: WaterBody                |
+| LandUse                     | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: LandUse                  |
+| PlantCover                  | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: Plantcover               |
+| SolitaryVegetationObject    | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: SolitaryVegetationObject |
+| CityFurniture               | IfcFurnishingElement    |                                                                   |
+| OtherConstruction           | IfcCivilElement         |                                                                   |
+| +GenericCityObject          | IfcCivilElement         |                                                                   |
+| Bridge                      | IfcCivilElement         |                                                                   |
+| BridgePart                  | IfcCivilElement         |                                                                   |
+| BridgeInstallation          | IfcCivilElement         |                                                                   |
+| BridgeConstructiveElement   | IfcCivilElement         |                                                                   |
+| BridgeRoom                  | IfcCivilElement         |                                                                   |
+| BridgeFurniture             | IfcCivilElement         |                                                                   |
+| Tunnel                      | IfcCivilElement         |                                                                   |
+| TunnelPart                  | IfcCivilElement         |                                                                   |
+| TunnelInstallation          | IfcCivilElement         |                                                                   |
+| TunnelConstructiveElement   | IfcCivilElement         |                                                                   |
+| TunnelHollowSpace           | IfcCivilElement         |                                                                   |
+| TunnelFurniture             | IfcCivilElement         |                                                                   |
+| CityObjectGroup             | IfcBuilding             |                                                                   |
+| GroundSurface               | IfcSlab                 | PredefinedType: BASESLAB                                          |
+| RoofSurface                 | IfcRoof                 |                                                                   |
+| WallSurface                 | IfcWall                 |                                                                   |
+| ClosureSurface              | IfcSpace                |                                                                   |
+| OuterCeilingSurface         | IfcCovering             | PredefinedType: CEILING                                           |
+| OuterFloorSurface           | IfcSlab                 | PredefinedType: FLOOR                                             |
+| Window                      | IfcWindow               |                                                                   |
+| Door                        | IfcDoor                 |                                                                   |
+| InteriorWallSurface         | IfcWall                 |                                                                   |
+| CeilingSurface              | IfcCovering             | PredefinedType: CEILING                                           |
+| FloorSurface                | IfcSlab                 | PredefinedType: FLOOR                                             |
+| WaterSurface                | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: WaterSurface             |
+| WaterGroundSurface          | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: WaterGroundSurface       |
+| WaterClosureSurface         | IfcGeographicElement    | PredefinedType: USERDEFINED, ObjectType: WaterClosureSurface      |
+| TrafficArea                 | IfcCivilElement         |                                                                   |
+| AuxiliaryTrafficArea        | IfcCivilElement         |                                                                   |
+| TransportationMarking       | IfcCivilElement         |                                                                   |
+| TransportationHole          | IfcCivilElement         |                                                                   |
 
 
 ## Communication
@@ -64,6 +123,10 @@ Feel free to ask questions you’re wondering about, share ideas and engage with
 Contributions to the project are very welcome!
 You could help with testing, documentation, bug reports, bug fixes, implementing new features and more.
 Please read the [CONTRIBUTING.md](https://github.com/3DGI/cityjson2jsonfg/blob/master/CONTRIBUTING.md) on how to get started.
+
+## Credits
+
+*cityjson2ifc* is a CLI that wraps the code that was developed by Laurens Oostwegel in 2021, [as part of IfcOpenShell](https://github.com/IfcOpenShell/IfcOpenShell/tree/v0.7.0/src/ifccityjson).
 
 ## Funding
 
