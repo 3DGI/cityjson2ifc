@@ -14,10 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from ifccityjson.cityjson2ifc.cityjson2ifc import Cityjson2ifc
+from ifccityjson.cityjson2ifc import Cityjson2ifc
 
-def convert(data, city_model):
 
+def cityjson2ifc(cm, file_destination, name_entity=None,
+                 lod_split=None, lod_select=None, name_project=None, name_site=None,
+                 name_person_family=None, name_person_given=None):
     converter = Cityjson2ifc()
-    converter.configuration(**data)
-    converter.convert(city_model)
+    converter.configuration(file_destination=file_destination, split=lod_split,
+                            lod=lod_select,
+                            name_attribute=name_entity,
+                            name_project=name_project,
+                            name_site=name_site,
+                            name_person_family=name_person_family,
+                            name_person_given=name_person_given)
+    converter.convert(city_model=cm)
