@@ -19,11 +19,8 @@ import gc
 
 import click
 from cjio import errors, cityjson, cjio
-from ifccityjson.cityjson2ifc import Cityjson2ifc
 
 from cityjson2ifc_cli import convert
-
-cityjson.CITYJSON_VERSIONS_SUPPORTED = ['1.1', ]
 
 
 def load_cityjson(infile, ignore_duplicate_keys):
@@ -43,11 +40,16 @@ def load_cityjson(infile, ignore_duplicate_keys):
             cjio._print_cmd(w)
     except errors.CJInvalidVersion as e:
         raise click.ClickException(e.msg)
+    if cm.get_version() != "1.1":
+        click.echo("Upgrading CityJSON to v1.1")
+        re, reasons = cm.upgrade_version("1.1", digit=4)
+        if (re == False):
+            click.echo("WARNING: %s" % (reasons))
     # Dereference the CityJSON geometry boundaries so that they store the
     # coordinates instead of vertex indices
     cm.cityobjects = dict()
     cm.load_from_j(transform=False)
-    # TODO: Remove duplicate data from the citymodel (need to be fixed in cjio)
+    # Remove duplicate data from the citymodel (need to be fixed in cjio)
     cm.j["CityObjects"] = {}
     gc.collect()
     return cm
