@@ -5,10 +5,8 @@ name: Python application
 
 on:
   push:
-#    tags:
-#      - '*'
-    branches:
-      - master
+    tags:
+      - '*'
 
 permissions:
   contents: read

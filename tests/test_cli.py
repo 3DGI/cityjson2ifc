@@ -14,6 +14,6 @@ def fail_with_msg(result, runner):
 
 def test_help():
     runner = CliRunner()
-    result = runner.invoke(cli.main_cmd,
+    result = runner.invoke(cli.cli,
                            args=["--help"])
     assert result.exit_code == 0
