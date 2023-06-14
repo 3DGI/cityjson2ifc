@@ -48,7 +48,7 @@ jobs:
     - name: Pyinstaller package
       run: |
         pip install .
-        pyinstaller --name cityjson2ifc --onefile --collect-submodules ifcopenshell --collect-submodules ifccityjson --hidden-import ifccityjson src/cityjson2ifc_cli/cli.py
+        pyinstaller --name cityjson2ifc --onefile --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
     - if: runner.os == 'Linux'
       run: |
         zip -rj dist/cityjson2ifc-ubuntu.zip dist/cityjson2ifc
