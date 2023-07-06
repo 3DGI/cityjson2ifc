@@ -113,6 +113,9 @@ cjio --suppress_msg <input.city.json> upgrade save stdout | cityjson2ifc - <outp
 | TransportationMarking       | IfcCivilElement         |                                                                   |
 | TransportationHole          | IfcCivilElement         |                                                                   |
 
+## Sample data
+
+*cityjson2ifc* has been tested with the [3D BAG](https://3dbag.nl) and the [3D Basisvoorziening](https://www.pdok.nl/introductie/-/article/3d-basisvoorziening-1).
 
 ## Communication
 
