@@ -24,7 +24,7 @@ jobs:
         include:
           - os: windows-latest
             artifact_name: cityjson2ifc-win
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             artifact_name: cityjson2ifc-ubuntu
           - os: macos-latest
             artifact_name: cityjson2ifc-macos
