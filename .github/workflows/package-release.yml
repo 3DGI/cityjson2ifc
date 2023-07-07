@@ -5,8 +5,10 @@ name: Python application
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - code-sign
+#    tags:
+#      - '*'
 
 permissions:
   contents: read
@@ -50,19 +52,30 @@ jobs:
     - if: runner.os == 'Linux'
       run: |
         zip -rj dist/cityjson2ifc-ubuntu.zip dist/cityjson2ifc
+        sha256sum dist/cityjson2ifc-ubuntu.zip > dist/cityjson2ifc-ubuntu.zip.sha256sum
         rm dist/cityjson2ifc
     - if: runner.os == 'macOS'
       run: |
         zip -rj dist/cityjson2ifc-macos.zip dist/cityjson2ifc
+        shasum -a 256 dist/cityjson2ifc-macos.zip > dist/cityjson2ifc-macos.zip.sha256sum
         rm dist/cityjson2ifc
+    - if: runner.os == 'Windows'
+      run: |
+        certUtil -hashfile dist/cityjson2ifc.exe SHA256 > cityjson2ifc.exe.sha256sum
     - name: List contents
       run: |
         ls dist
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+    - name: Upload binaries to
+      uses: actions/upload-artifact@v3
       with:
-        repo_token: ${{ secrets.GH_PAT }}
-        file: dist/*
-        tag: ${{ github.ref }}
-        overwrite: true
-        file_glob: true
+        name: cityjson2ifc
+        path: dist/*
+        retention-days: 1
+#    - name: Upload binaries to release
+#      uses: svenstaro/upload-release-action@v2
+#      with:
+#        repo_token: ${{ secrets.GH_PAT }}
+#        file: dist/*
+#        tag: ${{ github.ref }}
+#        overwrite: true
+#        file_glob: true
