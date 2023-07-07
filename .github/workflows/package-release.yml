@@ -71,11 +71,7 @@ jobs:
     - if: runner.os == 'Windows'
       name: Pyinstaller package Windows
       run: |
-        pyinstaller \
-          --name cityjson2ifc \
-          --onefile \
-          --console \
-          --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
+        pyinstaller --name cityjson2ifc --onefile --console --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
         certUtil -hashfile dist/cityjson2ifc.exe SHA256 > dist/cityjson2ifc.exe.sha256sum
     - name: List contents
       run: |
