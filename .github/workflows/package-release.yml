@@ -45,23 +45,38 @@ jobs:
     - name: Test with tox
       run: |
         tox
-    - name: Pyinstaller package
-      run: |
-        pip install .
-        pyinstaller --name cityjson2ifc --onefile --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
+    - name: Install package
+      run: pip install .
     - if: runner.os == 'Linux'
+      name: Pyinstaller package Linux
       run: |
+        pyinstaller \
+          --name cityjson2ifc \
+          --onefile \
+          --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
         zip -rj dist/cityjson2ifc-ubuntu.zip dist/cityjson2ifc
         sha256sum dist/cityjson2ifc-ubuntu.zip > dist/cityjson2ifc-ubuntu.zip.sha256sum
         rm dist/cityjson2ifc
     - if: runner.os == 'macOS'
+      name: Pyinstaller package macOS
       run: |
+        pyinstaller \
+          --name cityjson2ifc \
+          --onefile \
+          --console \
+          --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
         zip -rj dist/cityjson2ifc-macos.zip dist/cityjson2ifc
         shasum -a 256 dist/cityjson2ifc-macos.zip > dist/cityjson2ifc-macos.zip.sha256sum
         rm dist/cityjson2ifc
     - if: runner.os == 'Windows'
+      name: Pyinstaller package Windows
       run: |
-        certUtil -hashfile dist/cityjson2ifc.exe SHA256 > cityjson2ifc.exe.sha256sum
+        pyinstaller \
+          --name cityjson2ifc \
+          --onefile \
+          --console \
+          --collect-all ifcopenshell src/cityjson2ifc_cli/cli.py
+        certUtil -hashfile dist/cityjson2ifc.exe SHA256 > dist/cityjson2ifc.exe.sha256sum
     - name: List contents
       run: |
         ls dist
