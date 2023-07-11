@@ -34,7 +34,7 @@ def load_cityjson(infile, ignore_duplicate_keys):
             cm = cityjson.reader(file=infile,
                                  ignore_duplicate_keys=ignore_duplicate_keys)
         except ValueError as e:
-            raise click.ClickException('%s: "%s".' % (e, infile))
+            raise click.ClickException('%s: "%s".' % (e, infile.name))
         except IOError as e:
             raise click.ClickException('Invalid file: "%s".\n%s' % (infile, e))
     try:
